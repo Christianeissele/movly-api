@@ -47,6 +47,15 @@ app.post('/workouts', async (c) => {
   }
 });
 
+app.delete('/workouts', async (c) => {
+  try {
+    await query('/workouts?id=not.is.null', { method: 'DELETE' });
+    return c.json({ ok: true });
+  } catch (e) {
+    return c.json({ error: e.message }, 500);
+  }
+});
+
 app.delete('/workouts/:id', async (c) => {
   try {
     await query(`/workouts?id=eq.${c.req.param('id')}`, { method: 'DELETE' });
